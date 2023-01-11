@@ -88,5 +88,8 @@ function showSlides(n) {
     	<p><a href="./travel/travelgrp_list.do">여행지 추천</a></p>
     </DIV>
   </DIV>
+  <div>
+ 20220111 수요일!!
+  </div>
 </body>
 </html>
