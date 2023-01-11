@@ -90,6 +90,7 @@ function showSlides(n) {
   </DIV>
   <div>
  20220111 수요일!!
+ dfdjgfdhjsd
   </div>
 </body>
 </html>
