@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="login" resultType="int" parameterType="HashMap">
     SELECT COUNT(users_no) as cnt
     FROM users
-    WHERE users_id=#{users_id} AND users_passwd=#{users_passwd}
+    WHERE users_id=#{users_id} AND users_passwd=#{users_passwd} AND users_yn="y"
   </select>
 
   <select id="checkID" resultType="int" parameterType="String">

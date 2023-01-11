@@ -9,4 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM travelgrp
     ORDER BY travelgrp_no ASC
   </select>
+  
+  <insert id="create" parameterType="dev.mvc.travel.TravelVO">
+    INSERT INTO travel(travelgrp_no, travel_name)
+    VALUES(#{travelgrp_no}, #{travel_name})
+  </insert> 
 </mapper> 

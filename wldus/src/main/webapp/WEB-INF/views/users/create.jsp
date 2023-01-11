@@ -17,8 +17,11 @@
   
   $(function() {
 	  $('#users_name').on('focusout', checkName);
+	  $('#users_id').on('focusout', ID);
 	  $("#btn_checkID").on("click", checkID);
+	  $('#users_passwd').on('focusout', PW);
 	  $('#users_passchk').on('focusout', checkPW);
+	  $('#users_email').on('focusout', checkEmail);
 	  $('#btn_send').on("click", send);
   });
   
@@ -34,6 +37,16 @@
 		  $('#NameChk').html("");
 		  $("#nameDoubleChk").val("true");
 	  }
+  }
+  function ID() {
+	  	var idPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9_-]{6,16}$/
+	  	var userid = $("#users_id").val();
+
+	  	if(!userid.match(idPattern)){
+	  		alert("아이디는 8~16자 영문+숫자 조합입니다.");
+	  		return;
+	  	}
+	
   }
   
   function checkID() {
@@ -56,7 +69,7 @@
 			  dataType: 'json',
 			  dats: params,
 			  success: function(rdata) {
-				  
+				  console.log(rdata)
 				  if (rdata.cnt > 0) {
 					  $("#IdChk").text("이미 사용중인 ID입니다.");
 					  $("#IdChk").css("color", "red");
@@ -75,6 +88,19 @@
 	  }
   }
   
+  function PW() {
+	  var pwPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9_-]{8,16}$/
+	  var userpw=$("#users_passwd").val();
+	  
+	  if(userpw.match(pwPattern)){
+			$("#Pw").text("사용가능한 비밀번호입니다.").css("color","green");
+			$("#pwDoubleChk2").val("true");
+		}else{
+			$("#Pw").text("비밀번호는 영문+숫자 조합 8~16자리입니다.").css("color","red");
+			$("#pwDoubleChk2").val("false");
+		}
+  }
+  
   function checkPW() {
 	  let frm = $('#frm');
 	  let pw1 = $('#users_passwd', frm).val();
@@ -83,7 +109,7 @@
 	  if(pw1 != "" || pw2 != "") {
 		  if(pw1 == pw2) {
 			  $('#PwChk').html("비밀번호가 일치합니다.")
-			  $("#PwChk").css("color", "green");
+			  $("#PwChk").css("color", "green"); 
 			  $("#pwDoubleChk").val("true");
 		  } else {
 			  $('#PwChk').html("비밀번호가 일치하지 않습니다.")
@@ -95,7 +121,47 @@
 	  }
   }
   
+  function checkEmail() {
+	  var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	  var input_email = $("#user_email").val();
+	  
+	  if(!input_email.match(emailPattern)){
+			alert("이메일 형식이 올바르지 않습니다.");
+			return;
+		}
+  }
+  
   function send() {
+	if($("#users_name").val() == ""){
+		alert("이름을 입력해주세요.");
+		$("#users_name").focus();
+		return;
+	}
+	if($("#users_id").val() == ""){
+		alert("아이디를 입력해주세요.");
+		$("#users_id").focus();
+		return;
+	}
+	if($("#idDoubleChk").val()!="true"){
+		alert("아이디 중복체크를 해주세요");
+		return;
+	}
+	if($("#users_passwd").val() == ""){
+		alert("비밀번호를 입력해주세요.");
+		$("#users_passwd").focus();
+		return;
+	}
+	if($("#users_email").val() == ""){
+		alert("이메일을 입력해주세요.");
+		$("#users_email").focus();
+		return;
+	}
+	if($("#users_tel").val() == ""){
+		alert("전회번호를 입력해주세요.");
+		$("#users_tel").focus();
+		return;
+	}
+	
 	$('#frm').submit();  
   }
   
@@ -111,7 +177,7 @@
 				<tr>
 				<th><label for="users_name">이&emsp;름&emsp;</label></th>
 				<td>
-					<input type="text" id="users_name" name="users_name" maxlength="8" required="required" autofocus/>
+					<input type="text" id="users_name" name="users_name" maxlength="8" autofocus/>
 					<small class="form-text text-muted"><span class="point" id="NameChk">이름을 입력해주세요.</span></small>
 					<input type="hidden" id="nameDoubleChk"/>
 				</td>
@@ -119,7 +185,7 @@
 				<tr>
 				<th><label for="users_id">I&emsp;D&emsp;</label></th>
 				<td>
-					<input type="text" id="users_id" name="users_id" maxlength="10" required="required"/>
+					<input type="text" id="users_id" name="users_id" maxlength="16"/>
 					<button type="button" id="btn_checkID">중복 확인 &emsp;</button>
 					<span class="point" id = "IdChk"><br></span>
 					<input type="hidden" id="idDoubleChk"/>
@@ -128,14 +194,15 @@
 				<tr>
 				<th><label for="users_passwd">P&emsp;W&emsp;</label></th>
 				<td>
-					<input id="users_passwd" type="password" name="users_passwd" required="required" maxlength="8" autocomplete="off"/>
-					<small class="form-text text-muted"><span class="point">* 비밀번호는 총 8자 까지 입력가능</span></small>
+					<input id="users_passwd" type="password" name="users_passwd" maxlength="16" autocomplete="off"/>
+					<span class="point" id="Pw"></span>
+					<input type="hidden" id="PwDoubleChk2"/>
 				</td>
 				</tr>
 				<tr>
 				<th><label for="users_passchk">P&emsp;W 확인</label></th>
 				<td>
-					<input id="users_passchk" type="password" name="users_passchk" required="required" placeholder="동일하게 입력해주세요." maxlength="8" autocomplete="off"/>
+					<input id="users_passchk" type="password" name="users_passchk" placeholder="동일하게 입력해주세요." maxlength="16" autocomplete="off"/>
 					<span class="point" id="PwChk"></span>
 					<input type="hidden" id="pwDoubleChk"/>
 				</td>
@@ -150,13 +217,13 @@
 				<tr>
 				<th><label for="users_email">이메일</label></th>
 				<td>
-					<input id="users_email" type="text" name="users_email" required="required" placeholder="example@naver.com"/>
+					<input id="users_email" type="text" name="users_email" placeholder="example@naver.com"/>
 				</td>
 				</tr>
 				<tr>
 				<th><label for="users_tel">휴대폰 번호</label></th>
 				<td>
-					<input id="users_tel" type="tel" name="users_tel" required placeholder="전화번호 입력"/>
+					<input id="users_tel" type="tel" name="users_tel" placeholder="전화번호 입력"/>
 				</td>
 				</tr>
 			</table>

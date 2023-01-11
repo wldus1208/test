@@ -52,17 +52,23 @@ function showSlides(n) {
  	<div class="slideshow-container">
 		<div class="mySlides fade2 active">
 			<img class="main_slideImg" src="/images/a1.jpg">
-			<div class="text">Caption Text</div>
+			<div class="text">a1</div>
 		</div>
-
 		<div class="mySlides fade2" >
 			<img class="main_slideImg" src="/images/a2.jpg">
-			<div class="text">Caption Two</div>
+			<div class="text">a2</div>
 		</div>
-
 		<div class="mySlides fade2" >
 			<img class="main_slideImg" src="/images/a3.jpg"> 
-			<div class="text">Caption Three</div>
+			<div class="text">a3</div>
+		</div>
+		<div class="mySlides fade2" >
+			<img class="main_slideImg" src="/images/a4.jpg"> 
+			<div class="text">a4</div>
+		</div>
+		<div class="mySlides fade2" >
+			<img class="main_slideImg" src="/images/a5.jpg"> 
+			<div class="text">a5</div>
 		</div>
 		<a class="prev" onclick="plusSlides(-1)">❮</a>
 		<a class="next"onclick="plusSlides(1)">❯</a>
@@ -73,6 +79,8 @@ function showSlides(n) {
 		<span class="dot" onclick="currentSlide(1)"></span> 
 		<span class="dot" onclick="currentSlide(2)"></span>
 		<span class="dot" onclick="currentSlide(3)"></span>
+		<span class="dot" onclick="currentSlide(4)"></span>
+		<span class="dot" onclick="currentSlide(5)"></span>
 	</div>
   
   <DIV style='margin: 0px auto; width: 90%;'>

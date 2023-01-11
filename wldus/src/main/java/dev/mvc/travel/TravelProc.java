@@ -19,5 +19,11 @@ public class TravelProc implements TravelProcInter {
 		List<TravelVO> list = this.travelDAO.list();
 	    return list;
 	}
+	
+	@Override
+	  public int create(TravelVO travelVO) {
+	    int cnt = this.travelDAO.create(travelVO);
+	    return cnt;
+	  }
 
 }

@@ -13,26 +13,84 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
-     
+<style>
+
+.tab {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#tabcontent {
+	display: block;
+	background-color: #fffff0;
+	padding: 6px 12px;
+	color: #fff;
+}
+#tab {
+	display: inline-block;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	padding: 14px 16px;
+	font-size: 17px;
+	transition: 0.3s;
+}
+a:visited { 
+	color: black; 
+	text-decoration: none;
+	
+	}
+
+
+li {
+	float: left;
+	display: inline-block;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	padding: 14px 16px;
+	font-size: 17px;
+}
+}
+</style>
+
+<script>
+	$(function() {
+		// tab operation
+		$('.tabmenu').click(function() {
+			var activeTab = $(this).attr('data-tab');
+			$('li').css('background-color', 'white');
+			$(this).css('background-color', '#fffff0');
+			$.ajax({
+				type : 'GET',                 //get방식으로 통신
+				url : activeTab + ".do",    //
+				dataType : "html",            //html형식으로 값 읽기
+				error : function() {          //통신 실패시
+					console.log(url);
+					alert('통신실패!');
+				},
+				success : function(data) {    //통신 성공시 탭 내용담는 div를 읽어들인 값으로 채운다.
+					$('#tabcontent').html(data);
+				}
+			});
+		});
+		$('#default').click();          
+	});
+</script>
 </head> 
  
 <body>
 <jsp:include page="../menu/top.jsp" />
-<DIV>
-  <div>
-  <table style='width: 100%; margin-top:50px; height:200px'>
-    <tbody>
-      <c:forEach var="travelVO" items="${list }">
-        
-        <tr> 
-          <td><i class="fa-solid fa-splotch"></i><a href="./travel_list.do?travelgrp_no=${travelVO.travelgrp_no}">${travelVO.travelgrp_name}</a></td> 
-        </tr>
-      </c:forEach>
-      
-    </tbody>
-  </table>
-</DIV>
-</DIV>
+	<div>
+		<ul class="tab">
+			<li data-tab="tab1" class='tabmenu' id="default"><a href="#" id="tab">시즌별 추천</a></li>
+			<li data-tab="tab2" class='tabmenu'><a href="#" id="tab">테마별 추천</a></li>
+			<li data-tab="tab3" class='tabmenu'><a href="#" id="tab">나이대별 추천</a></li>
+		</ul>
+		<div id="tabcontent"></div>
+	</div>
+</body>
 </body>
  
 </html>
